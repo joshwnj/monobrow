@@ -1,0 +1,31 @@
+{
+  "name": "monobrow",
+  "version": "1.0.0",
+  "description": "A single command for easily switching between browserify and watchify.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "monobrow": "./bin/monobrow"
+  },
+  "author": "joshwnj",
+  "license": "MIT",
+  "dependencies": {
+    "browserify": "^10.2.3",
+    "watchify": "^3.2.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshwnj/monobrow.git"
+  },
+  "keywords": [
+    "browserify",
+    "watchify"
+  ],
+  "bugs": {
+    "url": "https://github.com/joshwnj/monobrow/issues"
+  },
+  "homepage": "https://github.com/joshwnj/monobrow"
+}

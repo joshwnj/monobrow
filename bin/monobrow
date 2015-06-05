@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+var argv = process.argv.slice(2);
+var spawn = require('child_process').spawn;
+
+var watch = !!process.env.WATCH;
+var type = watch ? 'watchify' : 'browserify';
+
+// watchify uses verbose output by default
+if (watch) {
+  argv.push('-v');
+}
+
+var path = require('path');
+var cmdPath = path.join(__dirname, '..', 'node_modules/.bin', type);
+var cmd = spawn(cmdPath, argv);
+
+cmd.stdout.pipe(process.stdout);
+cmd.stderr.pipe(process.stderr);
