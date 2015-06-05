@@ -1,12 +1,18 @@
 monobrow
 ====
 
-A single command for easily switching between browserify and watchify.
+A single command for easily switching between [browserify](https://www.npmjs.com/package/browserify) and [watchify](https://www.npmjs.com/package/watchify).
 
 Usage
 ----
 
-In your package.json, write a script like:
+First add to your project:
+
+```
+npm install --save-dev monobrow
+```
+
+Now in your package.json, write a browserify build script like you normally would. `monobrow` expects exactly the same arguments as `browserify`:
 
 ```
 "scripts": {
