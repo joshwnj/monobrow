@@ -1,19 +1,28 @@
 #!/usr/bin/env node
 
-var argv = process.argv.slice(2);
-var spawn = require('child_process').spawn;
+var path = require('path');
+var minimist = require('minimist')
+var argv = minimist(process.argv.slice(2));
 
-var watch = !!process.env.WATCH;
-var type = watch ? 'watchify' : 'browserify';
+var configPath = argv.c || argv.config;
+var config = require(path.join(process.cwd(), configPath));
 
-// watchify uses verbose output by default
-if (watch) {
-  argv.push('-v');
+var browserify = require('browserify');
+
+var b;
+var bundle;
+
+if (config.watch) {
+  var watchify = require('watchify');
+  b = watchify(browserify(watchify.args));
+
+  bundle = require('../lib/watchify-bundle')(b, config);
+}
+else {
+  b = browserify();
+  bundle = require('../lib/browserify-bundle')(b, config);
 }
 
-var path = require('path');
-var cmdPath = path.join(__dirname, '..', 'node_modules/.bin', type);
-var cmd = spawn(cmdPath, argv);
-
-cmd.stdout.pipe(process.stdout);
-cmd.stderr.pipe(process.stderr);
+config.setup(b);
+b.add(path.join(path.dirname(configPath), config.entry));
+bundle();

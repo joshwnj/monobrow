@@ -1,7 +1,7 @@
 monobrow
 ====
 
-A single command for easily switching between [browserify](https://www.npmjs.com/package/browserify) and [watchify](https://www.npmjs.com/package/watchify).
+[browserify](https://www.npmjs.com/package/browserify) plus opinions.
 
 Usage
 ----
@@ -23,3 +23,30 @@ Now in your package.json, write a browserify build script like you normally woul
 Now you can do a single browserify build with `npm run build`.
 
 But if you're developing and want to automatically rebuild with watchify, use `WATCH=1 npm run build`
+
+Alternative
+----
+
+- add a script
+
+```
+"scripts": {
+  "build": "monobrow -c ./monobrow.config.js"
+}
+```
+
+- `monobrow.config.js` contains info about how to transform. If you want a plain build with `babelify`, you can use something like:
+
+```
+var babelify = require('babelify');
+
+module.exports = {
+  entry: './src/index.js',
+
+  watch: !!process.env.WATCH,
+
+  setup: function (b) {
+    b.transform(babelify);
+  }
+};
+```
