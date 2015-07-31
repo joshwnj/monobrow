@@ -1,7 +1,7 @@
 {
   "name": "monobrow",
   "version": "1.1.0",
-  "description": "Browserify + opinions",
+  "description": "Browserify with opinions",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +15,7 @@
     "browserify": "^10.2.3",
     "minimist": "^1.1.1",
     "uglifyjs": "^2.4.10",
-    "watchify": "^3.2.1"
+    "watchify": "^3.3.1"
   },
   "devDependencies": {},
   "repository": {

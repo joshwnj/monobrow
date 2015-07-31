@@ -1,7 +1,7 @@
 monobrow
 ====
 
-[browserify](https://www.npmjs.com/package/browserify) plus opinions.
+[browserify](https://www.npmjs.com/package/browserify), with opinions.
 
 Usage
 ----
@@ -12,22 +12,7 @@ First add to your project:
 npm install --save-dev monobrow
 ```
 
-Now in your package.json, write a browserify build script like you normally would. `monobrow` expects exactly the same arguments as `browserify`:
-
-```
-"scripts": {
-  "build": "monobrow entry.js -t babelify -o bundle.js"
-}
-```
-
-Now you can do a single browserify build with `npm run build`.
-
-But if you're developing and want to automatically rebuild with watchify, use `WATCH=1 npm run build`
-
-Alternative
-----
-
-- add a script
+Then add a script to your package.json
 
 ```
 "scripts": {
@@ -35,7 +20,7 @@ Alternative
 }
 ```
 
-- `monobrow.config.js` contains info about how to transform. If you want a plain build with `babelify`, you can use something like:
+Finally write a `monobrow.config.js` file containing info about how to transform. If you want a plain build with `babelify`, you can use something like:
 
 ```
 var babelify = require('babelify');
@@ -50,3 +35,13 @@ module.exports = {
   }
 };
 ```
+
+Using environment vars like `WATCH` in your script means you can effectively toggle between `browserify` or `watchify` with the same npm command:
+
+- `npm run build` will use `browserify`.
+- `WATCH=1 npm run build` will use `watchify`.
+
+License
+----
+
+MIT
