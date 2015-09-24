@@ -24,5 +24,10 @@ else {
 }
 
 config.setup(b);
-b.add(path.join(path.dirname(configPath), config.entry));
+
+var entryFilename = config.entry[0] === '/' ?
+    config.entry :
+    path.join(path.dirname(configPath), config.entry);
+
+b.add(entryFilename);
 bundle();
