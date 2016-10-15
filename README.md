@@ -1,7 +1,7 @@
 monobrow
 ====
 
-[browserify](https://www.npmjs.com/package/browserify), with opinions.
+[browserify](https://github.com/substack/node-browserify), with opinions.
 
 Usage
 ----
@@ -16,30 +16,28 @@ Then add a script to your package.json
 
 ```
 "scripts": {
-  "build": "monobrow -c ./monobrow.config.js"
+  "build": "monobrow"
 }
 ```
 
-Finally write a `monobrow.config.js` file containing info about how to transform. If you want a plain build with `babelify`, you can use something like:
+Finally write a `monobrow.js` file containing config for your project. For example if you want a plain build with `babelify`, you can use something like:
 
 ```
-var babelify = require('babelify');
+var babelify = require('babelify')
 
 module.exports = {
   entry: './src/index.js',
 
-  watch: !!process.env.WATCH,
-
   setup: function (b) {
-    b.transform(babelify);
+    b.transform(babelify)
   }
-};
+}
 ```
 
-Using environment vars like `WATCH` in your script means you can effectively toggle between `browserify` or `watchify` with the same npm command:
+The `--watch` (or `-w`) flag toggles between `browserify` and `watchify`:
 
 - `npm run build` will use `browserify`.
-- `WATCH=1 npm run build` will use `watchify`.
+- `npm run build -- --watch` will use `watchify`.
 
 License
 ----
