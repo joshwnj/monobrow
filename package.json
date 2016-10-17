@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "monobrow": "node ./bin/monobrow.js"
+    "monobrow": "./bin/monobrow.js"
   },
   "author": "joshwnj",
   "license": "MIT",
