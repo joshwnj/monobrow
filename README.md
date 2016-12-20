@@ -12,32 +12,28 @@ First add to your project:
 npm install --save-dev monobrow
 ```
 
-Then add a script to your package.json
+Then write a js module to build your project. For example, a simple one looks like this:
 
+```js
+// your-project/monobrow.js
+
+const m = require('monobrow')
+
+monobrow({
+  entry: 'src/index.js',
+  outDir: 'build',
+  verbose: true,
+  watch: false
+})
 ```
+
+Then you can build by running `node monobrow.js`, or add a script to your package.json:
+
+```json
 "scripts": {
-  "build": "monobrow"
+  "build": "node monobrow.js"
 }
 ```
-
-Finally write a `monobrow.js` file containing config for your project. For example if you want a plain build with `babelify`, you can use something like:
-
-```
-var babelify = require('babelify')
-
-module.exports = {
-  entry: './src/index.js',
-
-  setup: function (b) {
-    b.transform(babelify)
-  }
-}
-```
-
-The `--watch` (or `-w`) flag toggles between `browserify` and `watchify`:
-
-- `npm run build` will use `browserify`.
-- `npm run build -- --watch` will use `watchify`.
 
 License
 ----

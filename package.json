@@ -6,16 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "bin": {
-    "monobrow": "./bin/monobrow.js"
-  },
+  "keywords": [],
   "author": "joshwnj",
   "license": "MIT",
   "dependencies": {
     "browserify": "^13.1.0",
     "minimist": "^1.1.1",
+    "mkdirp": "^0.5.1",
     "uglifyjs": "^2.4.10",
-    "watchify": "^3.7.0"
+    "watchify": "^3.8.0"
   },
   "devDependencies": {},
   "repository": {
