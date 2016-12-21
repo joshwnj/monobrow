@@ -2,7 +2,6 @@
 
 var path = require('path')
 var browserify = require('browserify')
-var watchify = require('watchify')
 var minimist = require('minimist')
 var argv = minimist(process.argv.slice(2))
 
