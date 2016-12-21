@@ -7,16 +7,18 @@ var minimist = require('minimist')
 var argv = minimist(process.argv.slice(2))
 
 var rootDir = process.cwd()
-var configPath = argv.c || argv.config || 'monobrow.js'
+var configPath = argv.c || argv.config || 'monobrow.config.js'
 var config = require(path.join(rootDir, configPath))
+
+// set defaults
 config.rootDir = rootDir
 
-var b = watchify(browserify(watchify.args))
-var bundle = require('../lib/build')(b, config)
-
-if (config.setup) {
-  config.setup(b, config)
+if (typeof config.watch === 'undefined') {
+  config.watch = argv.w || argv.watch
 }
 
-b.add(path.join(rootDir, config.entry))
-bundle()
+if (typeof config.verbose === 'undefined') {
+  config.verbose = argv.v || argv.verbose || true
+}
+
+require('../index')(config)

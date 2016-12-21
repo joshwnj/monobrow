@@ -3,28 +3,29 @@
   "version": "1.1.2",
   "description": "Browserify with opinions",
   "main": "index.js",
+  "bin": {
+    "monobrow": "./bin/monobrow.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "browserify"
+  ],
   "author": "joshwnj",
   "license": "MIT",
   "dependencies": {
     "browserify": "^13.1.0",
+    "browserify-incremental": "^3.1.1",
     "minimist": "^1.1.1",
     "mkdirp": "^0.5.1",
-    "uglifyjs": "^2.4.10",
-    "watchify": "^3.8.0"
+    "uglifyjs": "^2.4.10"
   },
   "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/joshwnj/monobrow.git"
   },
-  "keywords": [
-    "browserify",
-    "watchify"
-  ],
   "bugs": {
     "url": "https://github.com/joshwnj/monobrow/issues"
   },
