@@ -1,7 +1,7 @@
 monobrow
 ====
 
-[browserify](https://www.npmjs.com/package/browserify), with opinions.
+[browserify](https://github.com/substack/node-browserify), with opinions.
 
 Usage
 ----
@@ -12,34 +12,39 @@ First add to your project:
 npm install --save-dev monobrow
 ```
 
-Then add a script to your package.json
+Then write a js module to build your project. For example, a simple one looks like this:
 
-```
-"scripts": {
-  "build": "monobrow -c ./monobrow.config.js"
+```js
+// your-project/monobrow/config.js
+
+module.exports = {
+  entry: 'src/index.js',
+  outDir: 'build'
 }
 ```
 
-Finally write a `monobrow.config.js` file containing info about how to transform. If you want a plain build with `babelify`, you can use something like:
+Then add a script to your package.json:
 
-```
-var babelify = require('babelify');
-
-module.exports = {
-  entry: './src/index.js',
-
-  watch: !!process.env.WATCH,
-
-  setup: function (b) {
-    b.transform(babelify);
-  }
-};
+```json
+"scripts": {
+  "build": "monobrow -c monobrow/config.js"
+}
 ```
 
-Using environment vars like `WATCH` in your script means you can effectively toggle between `browserify` or `watchify` with the same npm command:
+And `npm run build`
 
-- `npm run build` will use `browserify`.
-- `WATCH=1 npm run build` will use `watchify`.
+Tech
+----
+
+- [browserify-incremental](https://github.com/jsdf/browserify-incremental): faster builds
+
+Example
+----
+
+Take a look at [monobrow-todomvc](https://github.com/joshwnj/monobrow-todomvc) to see a simple example of:
+
+- splitting app code and dependencies into separate bundles
+- adding transforms (eg. [babelify](https://github.com/babel/babelify))
 
 License
 ----
