@@ -15,25 +15,36 @@ npm install --save-dev monobrow
 Then write a js module to build your project. For example, a simple one looks like this:
 
 ```js
-// your-project/monobrow.js
+// your-project/monobrow/config.js
 
-const m = require('monobrow')
-
-monobrow({
+module.exports = {
   entry: 'src/index.js',
-  outDir: 'build',
-  verbose: true,
-  watch: false
-})
+  outDir: 'build'
+}
 ```
 
-Then you can build by running `node monobrow.js`, or add a script to your package.json:
+Then add a script to your package.json:
 
 ```json
 "scripts": {
-  "build": "node monobrow.js"
+  "build": "monobrow -c monobrow/config.js"
 }
 ```
+
+And `npm run build`
+
+Tech
+----
+
+- [browserify-incremental](https://github.com/jsdf/browserify-incremental): faster builds
+
+Example
+----
+
+Take a look at [monobrow-todomvc](https://github.com/joshwnj/monobrow-todomvc) to see a simple example of:
+
+- splitting app code and dependencies into separate bundles
+- adding transforms (eg. [babelify](https://github.com/babel/babelify))
 
 License
 ----
