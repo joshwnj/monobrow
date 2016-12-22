@@ -16,8 +16,11 @@ module.exports = function (opts) {
 
   var bundle = require('./lib/build')(b, opts)
 
+  // setup (optional) can either be a function or an array of functions
   if (typeof opts.setup === 'function') {
     opts.setup(b, opts)
+  } else if (Array.isArray(opts.setup)) {
+    opts.setup.forEach(function (f) { f(b, opts) })
   }
 
   // make sure the output directory exists
