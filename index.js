@@ -2,17 +2,26 @@ var path = require('path')
 var browserify = require('browserify')
 var browserifyInc = require('browserify-incremental')
 var mkdirp = require('mkdirp')
+var watchify = require('watchify')
 
 module.exports = function (opts) {
   opts = opts || {}
   if (!opts.rootDir) { opts.rootDir = process.cwd() }
   if (!opts.cacheFile) { opts.cacheFile = '.bcache.json' }
+  if (typeof opts.inc === 'undefined') { opts.inc = true }
   if (!opts.outFile) {
     opts.outFile = path.join(opts.rootDir, opts.outDir, path.basename(opts.entry))
   }
 
-  var b = browserify(browserifyInc.args)
-  browserifyInc(b, { cacheFile: opts.cacheFile })
+  var b
+  if (opts.watch) {
+    b = watchify(browserify(watchify.args))
+  } else if (opts.inc) {
+    b = browserify(browserifyInc.args)
+    browserifyInc(b, { cacheFile: opts.cacheFile })
+  } else {
+    b = browserify()
+  }
 
   var bundle = require('./lib/build')(b, opts)
 

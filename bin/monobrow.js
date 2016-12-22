@@ -15,6 +15,10 @@ if (typeof config.watch === 'undefined') {
   config.watch = argv.w || argv.watch
 }
 
+if (typeof config.inc === 'undefined') {
+  config.inc = argv.inc || true
+}
+
 if (typeof config.verbose === 'undefined') {
   config.verbose = argv.v || argv.verbose || true
 }
