@@ -34,3 +34,10 @@ module.exports = function (opts) {
 
   bundle()
 }
+
+// shortcut for a "setup" function to externalise some deps
+module.exports.external = function (deps) {
+  return function (b) {
+    b.external(deps)
+  }
+}
