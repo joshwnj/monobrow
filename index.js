@@ -1,8 +1,12 @@
-var path = require('path')
-var browserify = require('browserify')
-var browserifyInc = require('browserify-incremental')
-var mkdirp = require('mkdirp')
-var watchify = require('watchify')
+const path = require('path')
+const browserify = require('browserify')
+const browserifyInc = require('browserify-incremental')
+const fs = require('fs')
+const mkdirp = require('mkdirp')
+const watchify = require('watchify')
+const multistream = require('multistream')
+
+const allDeps = []
 
 module.exports = function (opts) {
   opts = opts || {}
@@ -44,12 +48,34 @@ module.exports = function (opts) {
     b.require(opts.modules)
   }
 
-  bundle()
+  const onFinish = function () {
+    if (!opts.watch) {
+      process.exit()
+    }
+  }
+
+  const bundleFunc = bundle.bind(null, onFinish)
+
+  if (!allDeps.length) { return bundleFunc() }
+
+  concatDeps(opts, allDeps, function (err) {
+    if (err) {
+      console.log(err)
+    }
+
+    bundleFunc()
+  })
 }
 
-// shortcut for a "setup" function to externalise some deps
-module.exports.external = function (deps) {
-  return function (b) {
-    b.external(deps)
-  }
+module.exports.deps = function (b, deps, outFile) {
+  b.external(deps)
+  allDeps.push(outFile)
+}
+
+function concatDeps (opts, deps, cb) {
+  const streams = deps.map(d => fs.createReadStream(d))
+  multistream(streams)
+    .pipe(fs.createWriteStream(path.join(opts.outDir, '_deps.js')))
+    .on('error', cb)
+    .on('close', () => cb(null))
 }
