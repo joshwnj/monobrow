@@ -5,7 +5,7 @@ var minimist = require('minimist')
 var argv = minimist(process.argv.slice(2))
 
 var rootDir = process.cwd()
-var configPath = argv.c || argv.config || 'monobrow.config.js'
+var configPath = argv.c || argv.config || 'monobrow/config.js'
 var config = require(path.join(rootDir, configPath))
 
 // set defaults
