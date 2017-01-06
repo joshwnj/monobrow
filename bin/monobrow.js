@@ -23,4 +23,11 @@ if (typeof config.verbose === 'undefined') {
   config.verbose = argv.v || argv.verbose || true
 }
 
-require('../index')(config)
+const isPack = !!config._path
+if (isPack) {
+  require('../vendor')(config)
+}
+else {
+  require('../index')(config)
+}
+
