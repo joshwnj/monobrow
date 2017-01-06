@@ -1,6 +1,7 @@
 const path = require('path')
 const browserify = require('browserify')
 const browserifyInc = require('browserify-incremental')
+const caller = require('caller')
 const fs = require('fs')
 const mkdirp = require('mkdirp')
 const watchify = require('watchify')
@@ -70,6 +71,10 @@ module.exports = function (opts) {
 module.exports.deps = function (b, deps, outFile) {
   b.external(deps)
   allDeps.push(outFile)
+// define a pack
+module.exports.pack = function (opts) {
+  opts._path = caller()
+  return opts
 }
 
 function concatDeps (opts, deps, cb) {
