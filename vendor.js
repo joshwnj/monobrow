@@ -4,13 +4,10 @@ const browserifyInc = require('browserify-incremental')
 const fs = require('fs')
 const mkdirp = require('mkdirp')
 const watchify = require('watchify')
-const multistream = require('multistream')
-
-const allDeps = []
 
 module.exports = function (opts) {
   opts = opts || {}
-  if (!opts.rootDir) { opts.rootDir = process.cwd() }
+
   if (!opts.cacheFile) { opts.cacheFile = '.bcache.json' }
   if (typeof opts.inc === 'undefined') { opts.inc = true }
 
@@ -19,8 +16,9 @@ module.exports = function (opts) {
     process.exit(1)
   }
 
+  const outDir = path.join(path.dirname(opts._path), 'dist')
   const modules = opts.vendor
-  opts.outFile = 'dist/vendor.js'
+  opts.outFile = path.join(outDir, 'vendor.js')
 
   var b
   if (opts.watch) {
@@ -35,7 +33,6 @@ module.exports = function (opts) {
   var bundle = require('./lib/build')(b, opts)
 
   // make sure the output directory exists
-  var outDir = path.dirname(opts.outFile)
   mkdirp.sync(outDir)
 
   b.require(modules)
