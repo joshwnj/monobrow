@@ -27,7 +27,7 @@ Then add a script to your package.json:
 
 ```json
 "scripts": {
-  "build": "monobrow -c monobrow/config.js"
+  "build": "monobrow"
 }
 ```
 
