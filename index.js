@@ -19,7 +19,7 @@ module.exports = function (opts) {
     vendor: '_vendor.js'
   }
 
-  opts.output = Object.assign({}, opts.output || {}, outputDefaults)
+  opts.output = Object.assign({}, outputDefaults, opts.output || {})
   opts.outFile = path.join(opts.rootDir, opts.output.dir, opts.output.bundle)
 
   var b
