@@ -1,5 +1,6 @@
 const path = require('path')
 const browserify = require('browserify')
+const hmr = require('browserify-hmr')
 const browserifyInc = require('browserify-incremental')
 const caller = require('caller')
 const fs = require('fs')
@@ -12,6 +13,10 @@ module.exports = function (opts) {
   if (!opts.rootDir) { opts.rootDir = process.cwd() }
   if (!opts.cacheFile) { opts.cacheFile = '.bcache.json' }
   if (typeof opts.inc === 'undefined') { opts.inc = true }
+
+  if (!!opts.hot) {
+    opts.watch = true
+  }
 
   const outputDefaults = {
     dir: 'dist',
@@ -30,6 +35,10 @@ module.exports = function (opts) {
     browserifyInc(b, { cacheFile: opts.cacheFile })
   } else {
     b = browserify()
+  }
+
+  if (opts.hot) {
+    b.plugin(hmr)
   }
 
   var bundle = require('./lib/build')(b, opts)

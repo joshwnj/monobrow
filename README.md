@@ -33,9 +33,12 @@ Then add a script to your package.json:
 
 And `npm run build`
 
+You can also `npm run build -- -w` to watch, or `npm run build -- -h` to hot-reload.
+
 Tech
 ----
 
+- [browserify-hmr](https://github.com/AgentME/browserify-hmr): hot reloading
 - [browserify-incremental](https://github.com/jsdf/browserify-incremental): faster builds
 
 Example
