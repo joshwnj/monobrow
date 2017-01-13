@@ -14,7 +14,7 @@ module.exports = function (opts) {
   if (!opts.cacheFile) { opts.cacheFile = '.bcache.json' }
   if (typeof opts.inc === 'undefined') { opts.inc = true }
 
-  if (!!opts.hot) {
+  if (opts.hot) {
     opts.watch = true
   }
 
