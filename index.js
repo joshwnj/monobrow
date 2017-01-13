@@ -114,7 +114,7 @@ function normalizePack (input) {
   return {
     _path: input._path,
     setup: setup,
-    vendor: vendor,
+    vendor: vendor
   }
 }
 

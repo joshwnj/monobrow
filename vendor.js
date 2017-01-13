@@ -1,7 +1,6 @@
 const path = require('path')
 const browserify = require('browserify')
 const browserifyInc = require('browserify-incremental')
-const fs = require('fs')
 const mkdirp = require('mkdirp')
 const watchify = require('watchify')
 

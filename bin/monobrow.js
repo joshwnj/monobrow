@@ -26,8 +26,7 @@ if (typeof config.verbose === 'undefined') {
 const isPack = !!config._path
 if (isPack) {
   require('../vendor')(config)
-}
-else {
+} else {
   require('../index')(config)
 }
 
