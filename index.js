@@ -20,12 +20,13 @@ module.exports = function (opts) {
 
   const outputDefaults = {
     dir: 'dist',
-    bundle: path.basename(opts.entry),
-    vendor: '_vendor.js'
+    bundle: path.basename(opts.entry)
   }
 
   opts.output = Object.assign({}, outputDefaults, opts.output || {})
   opts.outFile = path.join(opts.rootDir, opts.output.dir, opts.output.bundle)
+
+  const shouldSplitVendor = Boolean(opts.output.vendor)
 
   var b
   if (opts.watch) {
@@ -47,16 +48,20 @@ module.exports = function (opts) {
   const packs = normalizePacks(opts.packs)
   packs.forEach((p) => {
     // ignore vendor deps in the bundle
-    b.external(p.vendor)
+    if (shouldSplitVendor) {
+      b.external(p.vendor)
+    }
 
     // run the setup
     p.setup(b, opts)
   })
 
   // collect pre-bundled vendor files for all packs
-  const vendorFiles = packs.map((p) => {
-    return p._path ? path.join(path.dirname(p._path), 'dist', 'vendor.js') : null
-  }).filter(Boolean)
+  const vendorFiles = shouldSplitVendor
+        ? packs.map((p) => {
+          return p._path ? path.join(path.dirname(p._path), 'dist', 'vendor.js') : null
+        }).filter(Boolean)
+        : []
 
   // make sure the output directory exists
   var outDir = path.dirname(opts.outFile)
@@ -76,13 +81,17 @@ module.exports = function (opts) {
     }
   }
 
-  concatVendorFiles(opts, vendorFiles, function (err) {
-    if (err) {
-      console.log(err)
-    }
+  if (shouldSplitVendor) {
+    concatVendorFiles(opts, vendorFiles, function (err) {
+      if (err) {
+        console.log(err)
+      }
 
+      bundle(onFinish)
+    })
+  } else {
     bundle(onFinish)
-  })
+  }
 }
 
 /*
@@ -117,8 +126,7 @@ Normalize a single pack
 */
 function normalizePack (input) {
   const setup = (typeof input === 'function') ? input : input.setup
-  const vendor = input.vendor || {}
-  vendor.modules = vendor.modules || []
+  const vendor = input.vendor || []
 
   return {
     _path: input._path,

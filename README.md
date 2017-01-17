@@ -19,7 +19,9 @@ Then write a js module to build your project. For example, a simple one looks li
 
 module.exports = {
   entry: 'src/index.js',
-  outDir: 'build'
+  output: {
+    dir: 'build'
+  }
 }
 ```
 
@@ -34,6 +36,30 @@ Then add a script to your package.json:
 And `npm run build`
 
 You can also `npm run build -- -w` to watch, or `npm run build -- -h` to hot-reload.
+
+Simple bundle splitting
+----
+
+If you specify the `output.vendor` config, any packs that provide vendors can externalize them into a separate bundle.  Eg.
+
+```js
+// your-project/monobrow/config.js
+
+module.exports = {
+  entry: 'src/index.js',
+  output: {
+    dir: 'build',
+    vendor: 'vendor.js'
+  }
+}
+```
+
+This will produce 2 files in the `build` directory:
+
+- `build/index.js`: just your application bundle
+- `build/vendor.js`: a bundle with externalized vendor files
+
+When you do this, don't forget to add a new `<script src="dist/vendor.js"></script>` to your page, before the `<script>` tag that includes your application bundle.
 
 Tech
 ----
