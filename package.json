@@ -1,6 +1,6 @@
 {
   "name": "monobrow",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Browserify with opinions",
   "main": "index.js",
   "bin": {
