@@ -29,18 +29,10 @@ module.exports = function (opts) {
     b = browserify()
   }
 
-  var bundle = require('./lib/build')(b, opts)
-
   // make sure the output directory exists
   mkdirp.sync(outDir)
 
   b.require(modules)
 
-  const onFinish = function () {
-    if (!opts.watch) {
-      process.exit()
-    }
-  }
-
-  bundle(onFinish)
+  require('./lib/build')(b, opts)()
 }
