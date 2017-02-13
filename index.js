@@ -6,7 +6,6 @@ const caller = require('caller')
 const fs = require('fs')
 const mkdirp = require('mkdirp')
 const watchify = require('watchify')
-const multistream = require('multistream')
 
 module.exports = function (opts) {
   opts = opts || {}
@@ -26,8 +25,6 @@ module.exports = function (opts) {
   opts.output = Object.assign({}, outputDefaults, opts.output || {})
   opts.outFile = path.join(opts.rootDir, opts.output.dir, opts.output.bundle)
 
-  const shouldSplitVendor = Boolean(opts.output.vendor)
-
   var b
   if (opts.watch) {
     b = watchify(browserify(watchify.args))
@@ -42,26 +39,20 @@ module.exports = function (opts) {
     b.plugin(hmr)
   }
 
-  var bundle = require('./lib/build')(b, opts)
-
   // normalize setup packs
   const packs = normalizePacks(opts.packs)
   packs.forEach((p) => {
     // ignore vendor deps in the bundle
-    if (shouldSplitVendor) {
-      b.external(p.vendor)
-    }
+    b.external(p.vendor)
 
     // run the setup
     p.setup(b, opts)
   })
 
   // collect pre-bundled vendor files for all packs
-  const vendorFiles = shouldSplitVendor
-        ? packs.map((p) => {
-          return p._path ? path.join(path.dirname(p._path), 'dist', 'vendor.js') : null
-        }).filter(Boolean)
-        : []
+  const vendorFiles = packs.map((p) => {
+    return p._path ? path.join(path.dirname(p._path), 'dist', 'vendor.js') : null
+  }).filter(Boolean)
 
   // make sure the output directory exists
   var outDir = path.dirname(opts.outFile)
@@ -75,23 +66,8 @@ module.exports = function (opts) {
     b.require(opts.modules)
   }
 
-  const onFinish = function () {
-    if (!opts.watch) {
-      process.exit()
-    }
-  }
-
-  if (shouldSplitVendor) {
-    concatVendorFiles(opts, vendorFiles, function (err) {
-      if (err) {
-        console.log(err)
-      }
-
-      bundle(onFinish)
-    })
-  } else {
-    bundle(onFinish)
-  }
+  const streams = vendorFiles.map(d => fs.createReadStream(d))
+  require('./lib/build')(b, opts, streams)()
 }
 
 /*
@@ -102,21 +78,6 @@ Register a pack
 module.exports.pack = function (opts) {
   opts._path = caller()
   return opts
-}
-
-/*
-
-Concat all vendor files
-
-*/
-function concatVendorFiles (opts, deps, cb) {
-  if (!deps.length) { return cb() }
-
-  const streams = deps.map(d => fs.createReadStream(d))
-  multistream(streams)
-    .pipe(fs.createWriteStream(path.join(opts.rootDir, opts.output.dir, opts.output.vendor)))
-    .on('error', cb)
-    .on('close', () => cb(null))
 }
 
 /*
