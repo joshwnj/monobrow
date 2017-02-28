@@ -3,7 +3,6 @@ const browserify = require('browserify')
 const hmr = require('browserify-hmr')
 const browserifyInc = require('browserify-incremental')
 const caller = require('caller')
-const fs = require('fs')
 const mkdirp = require('mkdirp')
 const watchify = require('watchify')
 
@@ -66,8 +65,7 @@ module.exports = function (opts) {
     b.require(opts.modules)
   }
 
-  const streams = vendorFiles.map(d => fs.createReadStream(d))
-  require('./lib/build')(b, opts, streams)()
+  require('./lib/build')(b, opts, vendorFiles)()
 }
 
 /*
