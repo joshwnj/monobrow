@@ -33,4 +33,3 @@ if (isPack) {
 } else {
   require('../index')(config)
 }
-
