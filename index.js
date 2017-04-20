@@ -36,7 +36,7 @@ module.exports = function (opts) {
 
   if (opts.hot) {
     b.plugin(hmr, {
-      hostname: '0.0.0.0'
+      hostname: opts.hot_hostname
     })
   }
 
