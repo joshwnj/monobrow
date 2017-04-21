@@ -16,8 +16,9 @@ if (typeof config.watch === 'undefined') {
 }
 
 if (typeof config.hot === 'undefined') {
-  config.hot = argv.h || argv.hot
-  config.hot_hostname = argv['hh'] || argv['hot-hostname'] || '0.0.0.0'
+  const hotVal = argv.h || argv.hot
+  config.hot = Boolean(hotVal)
+  config.hotHostname = typeof hotVal === 'string' ? hotVal : '0.0.0.0'
 }
 
 if (typeof config.inc === 'undefined') {
