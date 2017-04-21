@@ -35,7 +35,9 @@ module.exports = function (opts) {
   }
 
   if (opts.hot) {
-    b.plugin(hmr)
+    b.plugin(hmr, {
+      hostname: opts.hotHostname
+    })
   }
 
   // normalize setup packs

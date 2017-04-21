@@ -37,6 +37,8 @@ And `npm run build`
 
 You can also `npm run build -- -w` to watch, or `npm run build -- -h` to hot-reload.
 
+You can also specify `hostname` for the hot reload server: `npm run build -- -h 127.0.0.1`. If you supply `-h` (or `--hot`) with no value, the default hostname of `0.0.0.0` is used.
+
 Simple bundle splitting
 ----
 
