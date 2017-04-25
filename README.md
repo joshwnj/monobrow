@@ -3,7 +3,7 @@ monobrow
 
 [browserify](https://github.com/substack/node-browserify), with opinions.
 
-Usage
+Install
 ----
 
 First add to your project:
@@ -12,7 +12,24 @@ First add to your project:
 npm install --save-dev monobrow
 ```
 
-Then write a js module to build your project. For example, a simple one looks like this:
+Quick start
+----
+
+After installing, run `monobrow init`:
+
+```js
+./node_modules/.bin/monobrow init
+```
+
+This will:
+
+- create a config file with default settings (`monobrow/config.js`)
+- add some aliases to your `package.json` scripts
+
+Writing config by hand
+----
+
+Monobrow config is just a js module that exports an object. For example, a simple one looks like this:
 
 ```js
 // your-project/monobrow/config.js
