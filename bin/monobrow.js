@@ -43,8 +43,7 @@ if (cmd === 'build') {
   } else {
     require('../index')(config)
   }
-}
-else if (cmd === 'init') {
+} else if (cmd === 'init') {
   const filepath = path.join(rootDir, configPath)
   const dir = path.dirname(filepath)
 
@@ -54,8 +53,7 @@ else if (cmd === 'init') {
   // create the config file if it doesn't already exist
   if (fs.existsSync(filepath)) {
     console.log('- found existing config: %s', filepath)
-  }
-  else {
+  } else {
     fs.writeFileSync(filepath, `module.exports = {
   entry: 'src/index.js',
   output: {
@@ -71,8 +69,7 @@ else if (cmd === 'init') {
   const pkg = require(pkgpath)
   if (pkg.scripts.build) {
     console.log('- found existing scripts.build in package.json')
-  }
-  else {
+  } else {
     pkg.scripts.build = 'monobrow'
 
     if (!pkg.scripts.monobrow) {
