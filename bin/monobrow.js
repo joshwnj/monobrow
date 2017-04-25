@@ -9,11 +9,10 @@ var configPath = argv.c || argv.config || 'monobrow/config.js'
 var config = require(path.join(rootDir, configPath))
 
 // set defaults
-config.rootDir = rootDir
-
 if (typeof config.watch === 'undefined') {
   config.watch = argv.w || argv.watch
 }
+if (!config.rootDir) { config.rootDir = rootDir }
 
 if (typeof config.hot === 'undefined') {
   const hotVal = argv.h || argv.hot
