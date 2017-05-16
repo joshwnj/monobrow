@@ -82,7 +82,7 @@ This will produce 2 files in the `build` directory:
 - `build/index.js`: just your application bundle
 - `build/vendor.js`: a bundle with externalized vendor files
 
-When you do this, don't forget to add a new `<script src="dist/vendor.js"></script>` to your page, before the `<script>` tag that includes your application bundle.
+When you do this, don't forget to add a new `<script src="build/vendor.js"></script>` to your page, before the `<script>` tag that includes your application bundle.
 
 ### Vendor files provided by packs
 
