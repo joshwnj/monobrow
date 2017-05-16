@@ -59,7 +59,7 @@ You can also specify `hostname` for the hot reload server: `npm run build -- -h 
 Simple bundle splitting
 ----
 
-If you specify the `output.vendor` config, any packs that provide vendors can externalize them into a separate bundle.  Eg.
+Any packages listed in the `vendor` array will be split into a separate bundle. The default name is `vendor.js`, but can be specified in the `output.vendor` option. Eg.
 
 ```js
 // your-project/monobrow/config.js
@@ -67,9 +67,13 @@ If you specify the `output.vendor` config, any packs that provide vendors can ex
 module.exports = {
   entry: 'src/index.js',
   output: {
-    dir: 'build',
-    vendor: 'vendor.js'
-  }
+    dir: 'build'
+  },
+  vendor: [
+    'react',
+    'react-dom',
+    'classnames'
+  ]
 }
 ```
 
@@ -79,6 +83,25 @@ This will produce 2 files in the `build` directory:
 - `build/vendor.js`: a bundle with externalized vendor files
 
 When you do this, don't forget to add a new `<script src="dist/vendor.js"></script>` to your page, before the `<script>` tag that includes your application bundle.
+
+### Vendor files provided by packs
+
+Packs can provide a prebuilt bundle of vendor modules.  Eg.
+
+```js
+// your-project/monobrow/config.js
+
+module.exports = {
+  entry: 'src/index.js',
+  output: {
+    dir: 'build',
+    vendor: 'vendor.js'
+  },
+  packs: [
+    require('monobrow-react-pack')
+  ]
+}
+```
 
 Tech
 ----
