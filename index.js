@@ -49,6 +49,11 @@ module.exports = function (opts) {
 function normalizeOpts (opts) {
   if (!opts) { opts = {} }
 
+  // hmr plugin expects us to be using watchify
+  if (opts.hot) {
+    opts.watch = true
+  }
+
   // root directory for all source files
   // (assume that this is the same directory as package.json)
   if (!opts.rootDir) { opts.rootDir = process.cwd() }
