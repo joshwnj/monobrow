@@ -15,18 +15,14 @@ npm install --save-dev monobrow
 Quick start
 ----
 
-After installing, run `monobrow init`:
-
-```js
-./node_modules/.bin/monobrow init
-```
+After installing, run `npx monobrow init`
 
 This will:
 
 - create a config file with default settings (`monobrow/config.js`)
 - add some aliases to your `package.json` scripts
 
-Writing config by hand
+Editing config by hand
 ----
 
 Monobrow config is just a js module that exports an object. For example, a simple one looks like this:
