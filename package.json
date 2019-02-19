@@ -23,7 +23,7 @@
     "minimist": "^1.1.1",
     "mkdirp": "^0.5.1",
     "multistream": "^2.1.0",
-    "watchify": "^3.8.0"
+    "watchify": "^3.11.1"
   },
   "devDependencies": {
     "standard": "^11.0.0"
