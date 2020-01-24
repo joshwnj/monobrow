@@ -21,7 +21,7 @@
     "browserify-incremental": "^3.1.1",
     "caller": "^1.0.1",
     "minimist": "^1.1.1",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.3",
     "multistream": "^2.1.0",
     "watchify": "^3.8.0"
   },
